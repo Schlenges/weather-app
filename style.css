@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Open+Sans');
+
+body{
+  background-image: url("https://images.unsplash.com/photo-1481007553706-bde1ba8e91fd?auto=format&fit=crop&w=1500&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D");
+  background-repeat: no-repeat;
+  background-position: 0% 29%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container{
+  text-align:center;
+  padding: 20px 50px;
+  background-color: #f2f2f2;
+  margin: auto;
+  margin-top: 10%;
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 3px 3px 9px 0px rgba(0,0,0,0.61);
+  position: relative;
+}
+
+.container:after{
+  content: "";
+  position: absolute;
+  border: solid;
+  border-width: 30px;
+  border-color: rgba(0, 0, 0, 0);
+  border-right-color: #f2f2f2;
+  right: 100%;
+  top: 50%;
+  margin-top: -30px;
+}
+
+#header{
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+
+h1{
+  font-family: 'Indie Flower', cursive;
+}
+
+i{
+  font-size: 100px;
+}
+
+#iconDiv{
+  margin-bottom: 40px;
+
+}
+
+#temp{
+  cursor: pointer;
+  color: blue;
+}
