@@ -99,7 +99,3 @@ function displayTemp(data){
 	  };
 	});
 };
-
-
-
- 			
