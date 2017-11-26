@@ -1,92 +1,105 @@
 $(document).ready(function(){
+	// Check Geolocation
+  	if (navigator.geolocation) {
+  		navigator.geolocation.getCurrentPosition(function(position) {
+  			var lat = position.coords.latitude;
+		  	var long = position.coords.longitude;		  
+		  	var api = 'https://fcc-weather-api.glitch.me/api/current?lat='+lat+'&lon='+long;
 
-	if (navigator.geolocation) {
+		  	checkWeather(api);
+  		});
+  	} else {
+  		var paragraph = document.createElement("P");
+    	var text = document.createTextNode("Sorry, your browser doesn't support geolocation :(");
+    	paragraph.appendChild(text);
+    	document.body.appendChild(paragraph);  		
+  	};
+});
 
-		navigator.geolocation.getCurrentPosition(function(position) {
+// Description Objects
+var clear = {
+		icon: 'wi wi-day-sunny',
+		activity: 'a nice picnic',
+		description: 'be perfect',
+		weather: 'sunny'
+	},
 
-		  var lat = position.coords.latitude;
-		  var long = position.coords.longitude;		  
-		  var api = 'https://fcc-weather-api.glitch.me/api/current?lat='+lat+'&lon='+long;
-		  
-		  $.getJSON(api, function(data){
+	clouds = {
+		icon: 'wi wi-day-cloudy',
+		activity: 'going for a walk',
+		description: 'be pleasant enough',
+		weather: 'a little cloudy'
+	},
 
-		  	var clear = {
-		  		icon: 'wi wi-day-sunny',
-		  		activity: 'a nice picnic',
-		  		description: 'be perfect',
-		  		weather: 'sunny'
-		  	};
+	rain = {
+		icon: 'wi wi-showers',
+		activity: 'watching a movie',
+		description: 'put you in the right mood',
+		weather: 'be rainy'
+	},
 
-		  	var clouds = {
-		  		icon: 'wi wi-day-cloudy',
-		  		activity: 'going for a walk',
-		  		description: 'be pleasant enough',
-		  		weather: 'a little cloudy'
-		  	};
+	thunder = {
+		icon: 'wi wi-storm-showers',
+		activity: 'bundling up with a good book',
+		description: 'get a bit moody',
+		weather: 'stormy'
+	},
 
-		  	var rain = {
-		  		icon: 'wi wi-showers',
-		  		activity: 'watching a movie',
-		  		description: 'put you in the right mood',
-		  		weather: 'be rainy'
-		  	};
+	snow = {
+		icon: 'wi wi-snow',
+		activity: 'building a snowman',
+		description: 'provide some material',
+		weather: 'snowy'
+	};
+	
 
-		  	var thunder = {
-		  		icon: 'wi wi-storm-showers',
-		  		activity: 'bundling up with a good book',
-		  		description: 'get a bit moody',
-		  		weather: 'stormy'
-		  	};
+function checkWeather(api){
+	// jQuery AJAX Request
+	$.getJSON(api, function(data){
 
-		  	var snow = {
-		  		icon: 'wi wi-snow',
-		  		activity: 'building a snowman',
-		  		description: 'provide some material',
-		  		weather: 'snowy'
-		  	};
-		  	
+		// Check Weather Condition
+		if(data.weather[0].main == "Clear"){
+			displayWeather(clear);
+		};
+	    if(data.weather[0].main == "Clouds"){
+	      	displayWeather(clouds);
+	    };
+	    if(data.weather[0].main == "Rain" || data.weather[0].main == "Drizzle"){
+	      	displayWeather(rain);
+	    };
+	    if(data.weather[0].main == "Thunderstorm" || data.weather[0].main == "Fog"){
+	      	displayWeather(thunder);
+	    };
+	    if(data.weather[0].main == "Snow"){
+	      	displayWeather(snow);
+		};
 
-            // Checking Weather Condition
+	    displayTemp(data);
+	});
+};
 
-		    if(data.weather[0].main == "Clear"){
-		    	displayWeather(clear);
-		    };
-		    if(data.weather[0].main == "Clouds"){
-		      	displayWeather(clouds);
-		    };
-		    if(data.weather[0].main == "Rain" || data.weather[0].main == "Drizzle"){
-		      	displayWeather(rain);
-		    };
-		    if(data.weather[0].main == "Thunderstorm" || data.weather[0].main == "Fog"){
-		      	displayWeather(thunder);
-		    };
-		    if(data.weather[0].main == "Snow"){
-		      	displayWeather(snow);
-		    };
+function displayWeather(object){
+	document.getElementById('icon').className = object.icon;
+	document.getElementById('activity').innerHTML = object.activity;
+	document.getElementById('description').innerHTML = object.description;
+	document.getElementById('weather').innerHTML = object.weather;
+};
 
-		  	function displayWeather(object){
-	            document.getElementById('icon').className = object.icon;
-	            document.getElementById('activity').innerHTML = object.activity;
-	            document.getElementById('description').innerHTML = object.description;
-	            document.getElementById('weather').innerHTML = object.weather;
-         	};
- 
+function displayTemp(data){
+	var tempC = Math.round(data.main.temp)+ '°C.';
+	var tempF = Math.round(data.main.temp * 9 / 5 + 32)+ '°F.';
+	document.getElementById('temp').innerHTML = tempC ;
 
- 			// Converting Temperature
+	// Switch Celsius And Fahrenheit
+	$("#temp").click(function(){
+	  if($('#temp').text() == tempC){
+	    $('#temp').text(tempF);
+	  } else{
+	    $('#temp').text(tempC);
+	  };
+	});
+};
 
-		    var tempC = Math.round(data.main.temp)+ '°C.';
-		    var tempF = Math.round(data.main.temp * 9 / 5 + 32)+ '°F.';
-		    document.getElementById('temp').innerHTML = tempC ;
-		    
-		    $("#temp").click(function(){
-		      if($('#temp').text() == tempC){
-		        $('#temp').text(tempF);
-		      } else{
-		        $('#temp').text(tempC);
-		      };  
-		    })
-		    
-		  }); // getJSON
-		} // geolocation callback
-	)} // geolocation
-}) //document ready
+
+
+ 			
