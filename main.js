@@ -1,19 +1,19 @@
 $(document).ready(function(){
-	// Check Geolocation
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			var lat = position.coords.latitude;
-			var long = position.coords.longitude;		  
-			var api = 'https://fcc-weather-api.glitch.me/api/current?lat='+lat+'&lon='+long;
+    // Check Geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;		  
+            var api = 'https://fcc-weather-api.glitch.me/api/current?lat='+lat+'&lon='+long;
 
-			checkWeather(api);
-		});
-	} else {
-		var paragraph = document.createElement("P");
-	var text = document.createTextNode("Sorry, your browser doesn't support geolocation :(");
-	paragraph.appendChild(text);
-	document.body.appendChild(paragraph);  		
-	};
+            checkWeather(api);
+        });
+    } else {
+        var paragraph = document.createElement("P");
+        var text = document.createTextNode("Sorry, your browser doesn't support geolocation :(");
+        paragraph.appendChild(text);
+        document.body.appendChild(paragraph);  		
+    };
 });
 
 // Description Objects
