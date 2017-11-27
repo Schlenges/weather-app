@@ -1,5 +1,5 @@
+// Check Geolocation
 $(document).ready(function(){
-	// Check Geolocation
   	if (navigator.geolocation) {
   		navigator.geolocation.getCurrentPosition(function(position) {
   			var lat = position.coords.latitude;
@@ -8,13 +8,62 @@ $(document).ready(function(){
 
 		  	checkWeather(api);
   		});
+
   	} else {
-  		var paragraph = document.createElement("P");
-    	var text = document.createTextNode("Sorry, your browser doesn't support geolocation :(");
-    	paragraph.appendChild(text);
-    	document.body.appendChild(paragraph);  		
+  		document.getElementById('greeting').innerHTML = "Sorry, your browser doesn't seem to support geolocation :(";		
   	};
 });
+
+
+// Check Weather
+function checkWeather(api){
+	// jQuery AJAX Request
+	$.getJSON(api, function(data){
+
+		// Check Weather Condition
+		if(data.weather[0].main == "Clear"){
+			displayWeather(clear);
+		};
+	    if(data.weather[0].main == "Clouds"){
+	      	displayWeather(clouds);
+	    };
+	    if(data.weather[0].main == "Rain" || data.weather[0].main == "Drizzle"){
+	      	displayWeather(rain);
+	    };
+	    if(data.weather[0].main == "Thunderstorm" || data.weather[0].main == "Fog"){
+	      	displayWeather(thunder);
+	    };
+	    if(data.weather[0].main == "Snow"){
+	      	displayWeather(snow);
+		};
+
+	    displayTemp(data);
+	});
+};
+
+// Display Weather
+function displayWeather(object){
+	document.getElementById('icon').className = object.icon;
+	document.getElementById('activity').innerHTML = object.activity;
+	document.getElementById('description').innerHTML = object.description;
+	document.getElementById('weather').innerHTML = object.weather;
+};
+
+// Convert And Display Temperature
+function displayTemp(data){
+	var tempC = Math.round(data.main.temp)+ '°C.';
+	var tempF = Math.round(data.main.temp * 9 / 5 + 32)+ '°F.';
+	document.getElementById('temp').innerHTML = tempC ;
+
+	// Switch Celsius And Fahrenheit
+	$("#temp").click(function(){
+	  if($('#temp').text() == tempC){
+	    $('#temp').text(tempF);
+	  } else{
+	    $('#temp').text(tempC);
+	  };
+	});
+};
 
 // Description Objects
 var clear = {
@@ -51,55 +100,3 @@ var clear = {
 		description: 'provide some material',
 		weather: 'snowy'
 	};
-	
-
-function checkWeather(api){
-	// jQuery AJAX Request
-	$.getJSON(api, function(data){
-
-		// Check Weather Condition
-		if(data.weather[0].main == "Clear"){
-			displayWeather(clear);
-		};
-	    if(data.weather[0].main == "Clouds"){
-	      	displayWeather(clouds);
-	    };
-	    if(data.weather[0].main == "Rain" || data.weather[0].main == "Drizzle"){
-	      	displayWeather(rain);
-	    };
-	    if(data.weather[0].main == "Thunderstorm" || data.weather[0].main == "Fog"){
-	      	displayWeather(thunder);
-	    };
-	    if(data.weather[0].main == "Snow"){
-	      	displayWeather(snow);
-		};
-
-	    displayTemp(data);
-	});
-};
-
-function displayWeather(object){
-	document.getElementById('icon').className = object.icon;
-	document.getElementById('activity').innerHTML = object.activity;
-	document.getElementById('description').innerHTML = object.description;
-	document.getElementById('weather').innerHTML = object.weather;
-};
-
-function displayTemp(data){
-	var tempC = Math.round(data.main.temp)+ '°C.';
-	var tempF = Math.round(data.main.temp * 9 / 5 + 32)+ '°F.';
-	document.getElementById('temp').innerHTML = tempC ;
-
-	// Switch Celsius And Fahrenheit
-	$("#temp").click(function(){
-	  if($('#temp').text() == tempC){
-	    $('#temp').text(tempF);
-	  } else{
-	    $('#temp').text(tempC);
-	  };
-	});
-};
-
-
-
- 			
