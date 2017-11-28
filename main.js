@@ -21,21 +21,24 @@ function checkWeather(api){
     $.getJSON(api, function(data){
 
         // Check Weather Condition
-        if(data.weather[0].main == "Clear"){
-            displayWeather(clear);
-        };
-        if(data.weather[0].main == "Clouds"){
-            displayWeather(clouds);
-        };
-        if(data.weather[0].main == "Rain" || data.weather[0].main == "Drizzle"){
-            displayWeather(rain);
-        };
-        if(data.weather[0].main == "Thunderstorm" || data.weather[0].main == "Fog"){
-            displayWeather(thunder);
-        };
-        if(data.weather[0].main == "Snow"){
-            displayWeather(snow);
-        };
+        switch(data.weather[0].main){
+			case "Clear":
+				displayWeather(clear);
+				break;
+			case "Clouds":
+				displayWeather(clouds);
+				break;
+			case "Rain":
+			case "Drizzle":
+				displayWeather(rain);
+				break;
+			case "Thunderstorm":
+			case "Fog":
+				displayWeather(thunder);
+				break;
+			case "Snow":
+				displayWeather(snow);
+		};
 
         displayTemp(data);
     });
