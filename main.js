@@ -22,23 +22,23 @@ function checkWeather(api){
 
         // Check Weather Condition
         switch(data.weather[0].main){
-			case "Clear":
-				displayWeather(clear);
-				break;
-			case "Clouds":
-				displayWeather(clouds);
-				break;
-			case "Rain":
-			case "Drizzle":
-				displayWeather(rain);
-				break;
-			case "Thunderstorm":
-			case "Fog":
-				displayWeather(thunder);
-				break;
-			case "Snow":
-				displayWeather(snow);
-		};
+            case "Clear":
+                displayWeather(clear);
+                break;
+            case "Clouds":
+                displayWeather(clouds);
+                break;
+            case "Rain":
+            case "Drizzle":
+                displayWeather(rain);
+                break;
+            case "Thunderstorm":
+            case "Fog":
+                displayWeather(thunder);
+                break;
+            case "Snow":
+                displayWeather(snow);
+        };
 
         displayTemp(data);
     });
