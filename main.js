@@ -33,8 +33,11 @@ function checkWeather(api){
                 displayWeather(rain);
                 break;
             case "Thunderstorm":
-            case "Fog":
                 displayWeather(thunder);
+                break;
+            case "Fog":
+            case "Mist":
+                displayWeather(fog);
                 break;
             case "Snow":
                 displayWeather(snow);
@@ -95,6 +98,13 @@ var clear = {
         activity: 'bundling up with a good book',
         description: 'get a bit moody',
         weather: 'stormy'
+    },
+
+    fog = {
+        icon: 'wi wi-fog',
+        activity: 'staying inside and learning a new skill',
+        description: 'get a little gloomy',
+        weather: 'foggy'
     },
 
     snow = {
